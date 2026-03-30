@@ -1,0 +1,5 @@
+backend/target/
+backend/uploads/
+backend/outputs/
+node_modules/
+*.log

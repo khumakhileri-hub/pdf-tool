@@ -1,0 +1,33 @@
+<form id="form">
+    <input type="file" name="file"/>
+    <button>Upload</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+    document.getElementById("form").onsubmit = async (e) => {
+      e.preventDefault();
+
+      let formData = new FormData(e.target);
+
+      let res = await fetch("http://localhost:8080/resize", {
+        method: "POST",
+        body: formData
+      });
+
+      let jobId = await res.text();
+
+      let interval = setInterval(async () => {
+        let r = await fetch("http://localhost:8080/status/" + jobId);
+        let data = await r.json();
+
+        document.getElementById("status").innerText = data.status;
+
+        if (data.status === "DONE") {
+          clearInterval(interval);
+          window.location = "http://localhost:8080/download/" + jobId;
+        }
+      }, 2000);
+    };
+</script>
