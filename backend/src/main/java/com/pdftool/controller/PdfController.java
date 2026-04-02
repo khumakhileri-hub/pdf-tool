@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class PdfController {
 
     public static Map<String, Job> jobStore = new ConcurrentHashMap<>();
